@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<h1>Hyperlink.is</h1>
+
+<form action="/your-url" method="post">
+    <label for="url">Website URL</label>
+    <input id="url" type="url" name="url" value="" required>
+    <label for="code">Short Name</label>
+    <input id="code" type="text" name="code" value="" required>
+
+    {% for message in get_flashed_messages() %}
+        <span>{{ message }}</span>
+    {% endfor %}
+
+    <button type="submit">Shorten</button>
+</form>
+
+<form action="/your-url" method="post" enctype="multipart/form-data">
+    <label for="file">Website URL</label>
+    <input id="file" type="file" name="file" value="" required>
+    <label for="code">Short Name</label>
+    <input id="code" type="text" name="code" value="" required>
+
+    {% for message in get_flashed_messages() %}
+        <span>{{ message }}</span>
+    {% endfor %}
+
+    <button type="submit">Shorten</button>
+</form>
+
+{% if codes %}
+    <h2>Codes you have created:</h2>
+    <ul>
+        {% for code in codes %}
+        <li>
+            <a href="{{ url_for('urlshort.redirect_to_url', code=code) }}">{{ code }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}
+
